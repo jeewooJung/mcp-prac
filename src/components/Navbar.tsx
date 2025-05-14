@@ -1,10 +1,12 @@
 import { useThemeStore } from '../stores/useThemeStore';
+import { usePageStore } from '../stores/usePageStore';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
+  const { activePage, setActivePage } = usePageStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // 테마 변경 시 HTML element에 클래스 추가/제거
@@ -15,6 +17,22 @@ export default function Navbar() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+  
+  // 페이지 변경 시 스크롤 이동 함수
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+  // 페이지 변경 핸들러
+  const handlePageChange = (page: string) => {
+    setActivePage(page);
+    if (page === 'projects') {
+      scrollToSection('mobile-main-section');
+    }
+  };
   
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800">
@@ -27,25 +45,29 @@ export default function Navbar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <a
                 href="#"
-                className="border-indigo-500 text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                onClick={(e) => { e.preventDefault(); handlePageChange('dashboard'); }}
+                className={`${activePage === 'dashboard' ? 'border-indigo-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Dashboard
               </a>
               <a
                 href="#"
-                className="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                onClick={(e) => { e.preventDefault(); handlePageChange('team'); }}
+                className={`${activePage === 'team' ? 'border-indigo-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Team
               </a>
               <a
                 href="#"
-                className="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                onClick={(e) => { e.preventDefault(); handlePageChange('projects'); }}
+                className={`${activePage === 'projects' ? 'border-indigo-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Projects
               </a>
               <a
                 href="#"
-                className="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                onClick={(e) => { e.preventDefault(); handlePageChange('settings'); }}
+                className={`${activePage === 'settings' ? 'border-indigo-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Settings
               </a>
@@ -85,25 +107,29 @@ export default function Navbar() {
         <div className="pt-2 pb-3 space-y-1">
           <a
             href="#"
-            className="bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-700 dark:text-indigo-300 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={(e) => { e.preventDefault(); handlePageChange('dashboard'); setIsMobileMenuOpen(false); }}
+            className={`${activePage === 'dashboard' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-700 dark:text-indigo-300' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
           >
             Dashboard
           </a>
           <a
             href="#"
-            className="border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={(e) => { e.preventDefault(); handlePageChange('team'); setIsMobileMenuOpen(false); }}
+            className={`${activePage === 'team' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-700 dark:text-indigo-300' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
           >
             Team
           </a>
           <a
             href="#"
-            className="border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={(e) => { e.preventDefault(); handlePageChange('projects'); setIsMobileMenuOpen(false); }}
+            className={`${activePage === 'projects' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-700 dark:text-indigo-300' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
           >
             Projects
           </a>
           <a
             href="#"
-            className="border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={(e) => { e.preventDefault(); handlePageChange('settings'); setIsMobileMenuOpen(false); }}
+            className={`${activePage === 'settings' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-500 text-indigo-700 dark:text-indigo-300' : 'border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
           >
             Settings
           </a>

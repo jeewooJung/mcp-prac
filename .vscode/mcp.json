@@ -27,10 +27,9 @@
       "env": {
         "FIGMA_API_KEY": "${input:FIGMA_API_KEY}"
       }
-    },   
-     "TalkToFigma": {
-      "command": "cursor-talk-to-figma-mcp",
-      "args": []
+    },     "TalkToFigma": {
+      "command": "pnpm",
+      "args": ["dlx", "cursor-talk-to-figma-mcp@latest"]
     },
     "playwright": {
       "command": "npx",
