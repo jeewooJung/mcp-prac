@@ -32,11 +32,10 @@ export default {
         },
         border: {
           DEFAULT: '#e0e0e0',
-        },
-        ring: {
+        },        ring: {
           DEFAULT: '#000000',
         },
-        dior: {
+        brand: {
           black: '#000000',
           white: '#ffffff',
           gray: {
