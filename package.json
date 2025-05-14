@@ -12,6 +12,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@tanstack/react-query": "^5.76.1",
+    "@upstash/context7-mcp": "^1.0.8",
+    "context7": "^1.0.3",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.11.0",
     "lucide-react": "^0.510.0",
