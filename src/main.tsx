@@ -2,6 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import setInitialTheme from './utils/setInitialTheme'
+
+// 초기 테마 설정 적용
+setInitialTheme();
 
 // TanStack Query 설정
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'

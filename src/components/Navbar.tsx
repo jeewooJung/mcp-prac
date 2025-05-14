@@ -8,14 +8,19 @@ export default function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
   const { activePage, setActivePage } = usePageStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
-  // 테마 변경 시 HTML element에 클래스 추가/제거
+    // 테마 변경 시 HTML element에 클래스 추가/제거
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+    
+    // 로컬 스토리지에 테마 설정 저장
+    localStorage.setItem('theme-storage', JSON.stringify({
+      state: { theme },
+      version: 0,
+    }));
   }, [theme]);
   
   // 페이지 변경 시 스크롤 이동 함수

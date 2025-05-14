@@ -12,7 +12,12 @@
   }
   
   body {
-    @apply antialiased text-gray-800 bg-gray-50 min-h-screen;
+    @apply antialiased min-h-screen transition-colors duration-200;
+    @apply text-gray-800 bg-gray-50;
+  }
+  
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
   }
   
   h1, h2, h3, h4, h5, h6 {
