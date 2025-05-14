@@ -26,9 +26,8 @@ interface Banner {
   subtitle?: string;
 }
 
-const MobileMain: React.FC = () => {
-  // 카트 아이템 수 상태
-  const [cartItemCount, setCartItemCount] = useState(3);  // 랜덤 이미지 URL 생성 함수
+const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
+  const [cartItemCount] = useState(3);  // 카트 아이템 수 초기화
   const getRandomImageUrl = () => {
     const randomNum = Math.floor(Math.random() * 149) + 1;
     // 괄호가 포함된 원래 URL 형식

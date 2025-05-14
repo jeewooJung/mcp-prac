@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, type LoginFormData } from '../schemas/userSchemas';
+import { loginSchema } from '../schemas/userSchemas';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { Loader2, LogIn } from 'lucide-react';
@@ -9,13 +9,12 @@ import { format } from 'date-fns';
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
-  
-  const {
+    const {
     register,
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<LoginFormData>({
+  } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -24,7 +23,7 @@ export default function LoginForm() {
     }
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       setIsLoading(true);
       

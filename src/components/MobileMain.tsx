@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import TopNav from './TopNav';
-import MainBanner from './MainBanner';
-import FilterSection from './FilterSection';
-import ProductCard from './ProductCard';
-import Footer from './Footer';
+import TopNav from './mobile/TopNav';
+import MainBanner from './mobile/MainBanner';
+import FilterSection from './mobile/FilterSection';
+import ProductCard from './mobile/ProductCard';
+import Footer from './mobile/Footer';
 
 interface Product {
   id: string;
