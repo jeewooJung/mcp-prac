@@ -1,0 +1,45 @@
+{
+  "version": 1,  "inputs": [
+    {
+      "type": "promptString",
+      "id": "FIGMA_API_KEY",
+      "description": "Figma API Key",
+      "password": true
+    }
+  ],
+  "configurations": [
+    {
+      "name": "MCP Server",
+      "serverType": "mcp",
+      "port": 9091,
+      "description": "Default MCP configuration"
+    }
+  ],
+  "servers": {
+    "Framelink Figma MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=FIGMA_API_KEY",
+        "--stdio"
+      ],
+      "env": {
+        "FIGMA_API_KEY": "${input:FIGMA_API_KEY}"
+      }
+    },   
+     "TalkToFigma": {
+      "command": "cursor-talk-to-figma-mcp",
+      "args": []
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+    "Context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    }
+  }
+}
