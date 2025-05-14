@@ -1,71 +1,52 @@
-# TalkToFigma
 
-TalkToFigma는 VS Code에서 Figma 디자인 파일과 대화형으로 상호작용할 수 있게 해주는 Model Context Protocol(MCP) 서버입니다.
+# Cursor Talk to Figma MCP Plugin 설정 가이드
 
-## 개요
+## 1. 플러그인 설치하기
+Figma 커뮤니티에서 "Cursor Talk to Figma MCP Plugin" 다운로드:
+- [Cursor Talk to Figma MCP Plugin](https://www.figma.com/community/plugin/1485687494525374295/cursor-talk-to-figma-mcp-plugin) 링크 방문
+- "Get Plugin"을 클릭하여 Figma 계정에 추가
+- "Figma 파일 다운로드" 옵션을 선택하여 샘플 Figma 파일 받기 (선택사항)
 
-TalkToFigma를 사용하면 자연어로 Figma 디자인을 쿼리하고, 컴포넌트와 스타일을 분석하고, 디자인을 React 컴포넌트로 변환하는 등의 작업을 수행할 수 있습니다.
+## 2. Figma에서 플러그인 실행하기
+- Figma 디자인 파일 열기
+- 상단 메뉴 바에서 Plugins > Cursor Talk To Figma MCP Plugin 선택
+- 플러그인 인터페이스가 로드될 때까지 대기
 
-## 설정 방법
-
-### 사전 요구사항
-
-- VS Code 설치
-- MCP 확장 프로그램 설치
-- cursor-talk-to-figma-mcp 패키지 설치
-
-### 설치
-
-터미널에서 다음 명령어를 실행하여 TalkToFigma MCP 서버를 설치합니다:
+## 3. 서버 설정하기
+GitHub 저장소에서 소스 코드를 클론하거나 다운로드:
 
 ```bash
-npm install -g cursor-talk-to-figma-mcp
+# 저장소 클론하기
+git clone https://github.com/sonnylazuardi/cursor-talk-to-figma-mcp.git
+
+# 프로젝트 디렉토리로 이동
+cd cursor-talk-to-figma-mcp
+
+# 의존성 설치
+bun install
+
+# WebSocket 서버 시작
+bun socket
 ```
 
-### 서버 실행
+## 4. 플러그인 연결 설정하기
+- Figma 플러그인 인터페이스에서 "Connect" 버튼 클릭
+- 플러그인이 로컬 서버와 연결을 시도합니다
+- 연결이 성공하면 고유한 채널 ID가 포함된 확인 메시지가 표시됩니다
 
-TalkToFigma MCP 서버를 직접 실행하려면 터미널에서 다음 명령어를 실행합니다:
+## 5. VS Code 통합 활성화하기
+- VS Code 열기
+- 명령 팔레트(Ctrl+Shift+P 또는 Cmd+Shift+P)에서 다음을 입력하고 선택:
+  "TalkToFigma mcp start"
+- 이렇게 하면 Figma 통신을 위한 VS Code 확장 프로그램이 활성화됩니다
 
-```bash
-cursor-talk-to-figma-mcp
-```
-
-또는 VS Code 명령 팔레트(`Ctrl+Shift+P`)를 열고 "MCP: Connect to Server"를 선택한 다음 "TalkToFigma"를 선택합니다.
-
-## 사용 예시
-
-### Figma 디자인 분석하기
-
-1. Figma 파일 URL을 복사합니다.
-2. VS Code에서 AI에게 다음과 같은 질문을 합니다:
-   "이 Figma 디자인의 컬러 팔레트를 분석해줘: [Figma URL]"
-
-### React 컴포넌트로 변환하기
-
-1. Figma 파일이나 컴포넌트의 URL을 복사합니다.
-2. VS Code에서 AI에게 다음과 같이 요청합니다:
-   "이 Figma 컴포넌트를 React와 Tailwind CSS를 사용하여 구현해줘: [Figma URL]"
-
-### 디자인 가이드라인 추출하기
-
-디자인 시스템의 일관성을 유지하기 위해 Figma 파일에서 디자인 가이드라인을 추출할 수 있습니다:
-
-```
-이 Figma 디자인에서 사용된 타이포그래피, 컬러, 간격 시스템을 분석해줘: [Figma URL]
-```
+## 6. 연결 완료하기
+- Figma 플러그인에서 다음과 같은 연결 메시지를 복사:
+  "Connected to Server in channel: [채널-아이디]"
+- 이 메시지를 VS Code의 Copilot 채팅 창에 붙여넣기
+- 확인되면 통합이 완료되고 사용할 준비가 됩니다
 
 ## 문제 해결
-
-### 서버 연결 실패
-- TalkToFigma 패키지가 제대로 설치되었는지 확인합니다.
-- 필요한 경우 `npm install -g cursor-talk-to-figma-mcp`로 재설치합니다.
-- VS Code를 재시작합니다.
-
-### Figma 파일 접근 권한 문제
-- Figma 파일이 공개되어 있거나 적절한 공유 설정이 되어 있는지 확인합니다.
-- 팀 프로젝트의 경우 파일에 대한 접근 권한이 있는지 확인합니다.
-
-## 추가 자료
-
-- [TalkToFigma GitHub 저장소](https://github.com/example/talk-to-figma-mcp)
-- [Figma 개발자 문서](https://www.figma.com/developers/api)
+- 방화벽이 WebSocket 연결을 허용하는지 확인
+- 서버와 Figma 플러그인이 동시에 실행 중인지 확인
+- 연결이 실패하면 서버를 다시 시작하고 Figma에서 다시 연결을 시도해 보세요

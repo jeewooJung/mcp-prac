@@ -28,20 +28,19 @@ interface Banner {
 
 const MobileMain: React.FC = () => {
   // 카트 아이템 수 상태
-  const [cartItemCount, setCartItemCount] = useState(3);
-    // 랜덤 이미지 URL 생성 함수
+  const [cartItemCount, setCartItemCount] = useState(3);  // 랜덤 이미지 URL 생성 함수
   const getRandomImageUrl = () => {
     const randomNum = Math.floor(Math.random() * 149) + 1;
+    // 괄호가 포함된 원래 URL 형식
     return `https://glnx9dqg6236.edge.naverncp.com/ori (${randomNum}).png`;
   };
-
   // 샘플 배너 데이터
   const banners: Banner[] = [
     {
       id: '1',
       imageUrl: getRandomImageUrl(),
-      title: 'NEW DIOR PRIVATE SALE',
-      subtitle: '디올 프라이빗 세일 최대 60% 할인'
+      title: 'NEW ORI PRIVATE SALE',
+      subtitle: '오리 프라이빗 세일 최대 60% 할인'
     },
     {
       id: '2',
@@ -68,12 +67,11 @@ const MobileMain: React.FC = () => {
       subtitle: '회원 전용 특별 혜택'
     }
   ];
-
   // 샘플 상품 데이터
   const products: Product[] = Array.from({ length: 12 }, (_, index) => ({
     id: index + 1,
     imageUrl: getRandomImageUrl(),
-    brand: ['DIOR', 'CHANEL', 'GUCCI', 'PRADA', 'BURBERRY', 'HERMES'][index % 6],
+    brand: ['ORI', 'CHANEL', 'GUCCI', 'PRADA', 'BURBERRY', 'HERMES'][index % 6],
     name: ['캐시미어 스웨터', '실크 블라우스', '울 코트', '가죽 재킷', '데님 팬츠', '플리츠 스커트'][index % 6] + ` ${index + 1}`,
     code: `PROD${10000 + index}`,
     price: 120000 + (index * 10000),
@@ -118,10 +116,9 @@ const MobileMain: React.FC = () => {
           onSizeGuideClick={handleSizeGuideClick}
           onSoldOutFilterChange={handleSoldOutFilterChange}
         />
-        
-        {/* 상품 그리드 */}
-        <section className="px-4 py-6">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+          {/* 상품 그리드 - 피그마 디자인에 따라 3열로 변경 */}
+        <section className="px-3 py-6">
+          <div className="grid grid-cols-3 gap-x-2 gap-y-5">
             {products.map(product => (
               <ProductCard 
                 key={product.id}

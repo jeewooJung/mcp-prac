@@ -27,7 +27,8 @@
       "env": {
         "FIGMA_API_KEY": "${input:FIGMA_API_KEY}"
       }
-    },     "TalkToFigma": {
+    },
+    "TalkToFigma": {
       "command": "pnpm",
       "args": ["dlx", "cursor-talk-to-figma-mcp@latest"]
     },
