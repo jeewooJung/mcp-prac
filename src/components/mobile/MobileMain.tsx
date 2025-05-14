@@ -65,9 +65,8 @@ const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
       title: 'EXCLUSIVE OFFERS',
       subtitle: '회원 전용 특별 혜택'
     }
-  ];
-  // 샘플 상품 데이터
-  const products: Product[] = Array.from({ length: 12 }, (_, index) => ({
+  ];  // 샘플 상품 데이터를 상태로 관리
+  const [products, setProducts] = useState<Product[]>(Array.from({ length: 12 }, (_, index) => ({
     id: index + 1,
     imageUrl: getRandomImageUrl(),
     brand: ['ORI', 'CHANEL', 'GUCCI', 'PRADA', 'BURBERRY', 'HERMES'][index % 6],
@@ -77,7 +76,7 @@ const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
     discount: index % 3 === 0 ? 20 : undefined,
     soldOut: index % 7 === 0,
     liked: index % 5 === 0
-  }));
+  })));
 
   // 이벤트 핸들러
   const handleSearchClick = () => {
@@ -91,9 +90,17 @@ const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
   const handleSizeGuideClick = () => {
     console.log('사이즈 가이드 클릭');
   };
-
   const handleSoldOutFilterChange = (checked: boolean) => {
     console.log(`품절 상품 ${checked ? '제외' : '포함'}`);
+  };
+
+  // 좋아요 상태 토글 핸들러
+  const handleLikeToggle = (productId: number, isLiked: boolean) => {
+    setProducts(prevProducts => 
+      prevProducts.map(product => 
+        product.id === productId ? { ...product, liked: isLiked } : product
+      )
+    );
   };
 
   return (
@@ -116,8 +123,7 @@ const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
           onSoldOutFilterChange={handleSoldOutFilterChange}
         />
           {/* 상품 그리드 - 피그마 디자인에 따라 3열로 변경 */}
-        <section className="px-3 py-6">
-          <div className="grid grid-cols-3 gap-x-2 gap-y-5">
+        <section className="px-3 py-6">          <div className="grid grid-cols-3 gap-x-2 gap-y-5">
             {products.map(product => (
               <ProductCard 
                 key={product.id}
@@ -129,6 +135,7 @@ const MobileMain: React.FC = () => {  // 카트 아이템 수 상태
                 discount={product.discount}
                 soldOut={product.soldOut}
                 liked={product.liked}
+                onLikeToggle={(isLiked) => handleLikeToggle(product.id, isLiked)}
               />
             ))}
           </div>

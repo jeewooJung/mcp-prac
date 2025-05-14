@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 
 interface ProductCardProps {
@@ -10,6 +10,7 @@ interface ProductCardProps {
   price: number;
   soldOut?: boolean;
   liked?: boolean;
+  onLikeToggle?: (isLiked: boolean) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -20,8 +21,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   discount,
   price,
   soldOut = false,
-  liked = false
+  liked = false,
+  onLikeToggle
 }) => {
+  // 내부적으로 좋아요 상태 관리
+  const [isLiked, setIsLiked] = useState(liked);
   const formattedPrice = new Intl.NumberFormat('ko-KR').format(price);
     return (
     <div className="flex flex-col w-full">
@@ -64,18 +68,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-xs font-semibold text-red-600 mr-0.5">{discount}%</span>
           )}
           <span className="text-xs font-semibold text-gray-900">{formattedPrice}원</span>
-        </div>
-
-        {/* 좋아요 버튼 - 더 작게 조정 */}
+        </div>        {/* 좋아요 버튼 - 더 작게 조정 */}
         <div className="flex items-center">
           <button 
             className="flex items-center justify-center w-4 h-4"
-            aria-label={liked ? "좋아요 취소" : "좋아요"}
+            aria-label={isLiked ? "좋아요 취소" : "좋아요"}
+            onClick={(e) => {
+              e.preventDefault();
+              const newLikedState = !isLiked;
+              setIsLiked(newLikedState);
+              if (onLikeToggle) {
+                onLikeToggle(newLikedState);
+              }
+            }}
           >
             <Heart 
               size={12} 
-              className={liked ? "fill-red-600 text-red-600" : "text-gray-400"}
-              strokeWidth={liked ? 0 : 2} 
+              className={isLiked ? "fill-red-600 text-red-600" : "text-gray-400"}
+              strokeWidth={isLiked ? 0 : 2} 
             />
           </button>
         </div>
